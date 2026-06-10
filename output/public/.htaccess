@@ -1,4 +1,3 @@
-Options -MultiViews
 RewriteEngine On
 
 # Serve existing files and directories directly (images, CSS, JS, PHP, etc.)
