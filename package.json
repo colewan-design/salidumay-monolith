@@ -4,16 +4,16 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently --names \"nuxt,laravel\" --prefix-colors \"cyan,green\" \"nuxt dev\" \"npm run server:serve\"",
+    "dev": "concurrently --names \"nuxt,laravel\" --prefix-colors \"cyan,green\" \"nuxt dev\" \"npm run api:serve\"",
     "build": "nuxt build",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "server:serve": "cd server && php artisan serve --port=8001",
-    "server:install": "cd server && composer install",
-    "server:migrate": "cd server && php artisan migrate",
-    "server:fresh": "cd server && php artisan migrate:fresh --seed",
-    "server:key": "cd server && php artisan key:generate",
-    "setup": "npm install && npm run server:install && npm run server:key && npm run server:migrate"
+    "api:serve": "cd api && php artisan serve --port=8001",
+    "api:install": "cd api && composer install",
+    "api:migrate": "cd api && php artisan migrate",
+    "api:fresh": "cd api && php artisan migrate:fresh --seed",
+    "api:key": "cd api && php artisan key:generate",
+    "setup": "npm install && npm run api:install && npm run api:key && npm run api:migrate"
   },
   "dependencies": {
     "axios": "^1.16.1",
