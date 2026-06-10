@@ -1,0 +1,27 @@
+{
+  "name": "salidumay",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "concurrently --names \"nuxt,laravel\" --prefix-colors \"cyan,green\" \"nuxt dev\" \"npm run server:serve\"",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "server:serve": "cd server && php artisan serve --port=8001",
+    "server:install": "cd server && composer install",
+    "server:migrate": "cd server && php artisan migrate",
+    "server:fresh": "cd server && php artisan migrate:fresh --seed",
+    "server:key": "cd server && php artisan key:generate",
+    "setup": "npm install && npm run server:install && npm run server:key && npm run server:migrate"
+  },
+  "dependencies": {
+    "axios": "^1.16.1",
+    "hls.js": "^1.6.16",
+    "nuxt": "^3.17.0",
+    "vue": "^3.5.0"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
