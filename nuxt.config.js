@@ -17,6 +17,9 @@ export default defineNuxtConfig({
 
   // Dev server proxy (mirrors vite.config.js)
   nitro: {
+    output: {
+      dir: 'output',
+    },
     prerender: {
       fallback: '200.html',
     },

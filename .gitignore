@@ -1,6 +1,7 @@
 # ── Nuxt ────────────────────────────────────────
 .nuxt/
 dist/
+.output/
 node_modules/
 .env
 .env.production
