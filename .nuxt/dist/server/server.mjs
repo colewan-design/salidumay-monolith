@@ -440,12 +440,12 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import("./_nuxt/index-CX7Pk7wm.js")
+    component: () => import("./_nuxt/index-DxpDDq4V.js")
   },
   {
     name: "login",
     path: "/login",
-    component: () => import("./_nuxt/login-CWGj4she.js")
+    component: () => import("./_nuxt/login-B9sFnpBc.js")
   },
   {
     name: "press",
@@ -460,7 +460,7 @@ const _routes = [
   {
     name: "movies",
     path: "/movies",
-    component: () => import("./_nuxt/movies-D-1pldkP.js")
+    component: () => import("./_nuxt/movies-D-0R3vgE.js")
   },
   {
     name: "careers",
@@ -480,12 +480,12 @@ const _routes = [
   {
     name: "history",
     path: "/history",
-    component: () => import("./_nuxt/history-CUqHdBFD.js")
+    component: () => import("./_nuxt/history-CV6qD_iz.js")
   },
   {
     name: "library",
     path: "/library",
-    component: () => import("./_nuxt/library-BhCZeoWY.js")
+    component: () => import("./_nuxt/library-4GbBY2gO.js")
   },
   {
     name: "privacy",
@@ -498,6 +498,11 @@ const _routes = [
     component: () => import("./_nuxt/reviews-CsQO1AdQ.js")
   },
   {
+    name: "support",
+    path: "/support",
+    component: () => import("./_nuxt/support-DehDhYeD.js")
+  },
+  {
     name: "rankings",
     path: "/rankings",
     component: () => import("./_nuxt/rankings-B4HJHtCy.js")
@@ -505,7 +510,7 @@ const _routes = [
   {
     name: "register",
     path: "/register",
-    component: () => import("./_nuxt/register-Bgn1xdRr.js")
+    component: () => import("./_nuxt/register-oeV7cyUI.js")
   },
   {
     name: "seasonal",
@@ -520,12 +525,12 @@ const _routes = [
   {
     name: "watchlists",
     path: "/watchlists",
-    component: () => import("./_nuxt/watchlists-JuV2FPqQ.js")
+    component: () => import("./_nuxt/watchlists-CVxnq3ya.js")
   },
   {
     name: "films",
     path: "/films",
-    component: () => import("./_nuxt/index-BfBAmiyO.js")
+    component: () => import("./_nuxt/index-BSrWNmCh.js")
   },
   {
     name: "genre",
@@ -547,7 +552,7 @@ const _routes = [
   {
     name: "auth-callback",
     path: "/auth/callback",
-    component: () => import("./_nuxt/callback-D7-hXmP3.js")
+    component: () => import("./_nuxt/callback-oYq_gIz5.js")
   },
   {
     name: "genre-genre",
@@ -557,7 +562,7 @@ const _routes = [
   {
     name: "film-id",
     path: "/film/:id()",
-    component: () => import("./_nuxt/index-DifF9-u6.js")
+    component: () => import("./_nuxt/index-WQ29iYkL.js")
   },
   {
     name: "film-id-watch",
@@ -573,7 +578,7 @@ const _routes = [
   {
     name: "films-category",
     path: "/films/:category()",
-    component: () => import("./_nuxt/_category_-C1p2nAI9.js")
+    component: () => import("./_nuxt/_category_-CSFwX-zh.js")
   },
   {
     name: "series-id",
@@ -583,7 +588,7 @@ const _routes = [
   {
     name: "watch-id-ep-ep",
     path: "/watch/:id()/ep/:ep()",
-    component: () => import("./_nuxt/_ep_-CVgAXT3d.js")
+    component: () => import("./_nuxt/_ep_-9mpM94ZU.js")
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -1027,7 +1032,7 @@ const plugins = [
   prerender_server_sqIxOBipVr4FbVMA9kqWL0wT8FPop6sKAXLVfifsJzk
 ];
 const layouts = {
-  default: defineAsyncComponent(() => import("./_nuxt/default-BKqvg4Zk.js").then((m) => m.default || m)),
+  default: defineAsyncComponent(() => import("./_nuxt/default-v07NTEjJ.js").then((m) => m.default || m)),
   player: defineAsyncComponent(() => import("./_nuxt/player-B0w2H5cY.js").then((m) => m.default || m))
 };
 const routeRulesMatcher = _routeRulesMatcher;

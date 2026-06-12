@@ -461,12 +461,12 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    component: () => import('./index-CX7Pk7wm.mjs')
+    component: () => import('./index-DxpDDq4V.mjs')
   },
   {
     name: "login",
     path: "/login",
-    component: () => import('./login-CWGj4she.mjs')
+    component: () => import('./login-B9sFnpBc.mjs')
   },
   {
     name: "press",
@@ -481,7 +481,7 @@ const _routes = [
   {
     name: "movies",
     path: "/movies",
-    component: () => import('./movies-D-1pldkP.mjs')
+    component: () => import('./movies-D-0R3vgE.mjs')
   },
   {
     name: "careers",
@@ -501,12 +501,12 @@ const _routes = [
   {
     name: "history",
     path: "/history",
-    component: () => import('./history-CUqHdBFD.mjs')
+    component: () => import('./history-CV6qD_iz.mjs')
   },
   {
     name: "library",
     path: "/library",
-    component: () => import('./library-BhCZeoWY.mjs')
+    component: () => import('./library-4GbBY2gO.mjs')
   },
   {
     name: "privacy",
@@ -519,6 +519,11 @@ const _routes = [
     component: () => import('./reviews-CsQO1AdQ.mjs')
   },
   {
+    name: "support",
+    path: "/support",
+    component: () => import('./support-DehDhYeD.mjs')
+  },
+  {
     name: "rankings",
     path: "/rankings",
     component: () => import('./rankings-B4HJHtCy.mjs')
@@ -526,7 +531,7 @@ const _routes = [
   {
     name: "register",
     path: "/register",
-    component: () => import('./register-Bgn1xdRr.mjs')
+    component: () => import('./register-oeV7cyUI.mjs')
   },
   {
     name: "seasonal",
@@ -541,12 +546,12 @@ const _routes = [
   {
     name: "watchlists",
     path: "/watchlists",
-    component: () => import('./watchlists-JuV2FPqQ.mjs')
+    component: () => import('./watchlists-CVxnq3ya.mjs')
   },
   {
     name: "films",
     path: "/films",
-    component: () => import('./index-BfBAmiyO.mjs')
+    component: () => import('./index-BSrWNmCh.mjs')
   },
   {
     name: "genre",
@@ -568,7 +573,7 @@ const _routes = [
   {
     name: "auth-callback",
     path: "/auth/callback",
-    component: () => import('./callback-D7-hXmP3.mjs')
+    component: () => import('./callback-oYq_gIz5.mjs')
   },
   {
     name: "genre-genre",
@@ -578,7 +583,7 @@ const _routes = [
   {
     name: "film-id",
     path: "/film/:id()",
-    component: () => import('./index-DifF9-u6.mjs')
+    component: () => import('./index-WQ29iYkL.mjs')
   },
   {
     name: "film-id-watch",
@@ -594,7 +599,7 @@ const _routes = [
   {
     name: "films-category",
     path: "/films/:category()",
-    component: () => import('./_category_-C1p2nAI9.mjs')
+    component: () => import('./_category_-CSFwX-zh.mjs')
   },
   {
     name: "series-id",
@@ -604,7 +609,7 @@ const _routes = [
   {
     name: "watch-id-ep-ep",
     path: "/watch/:id()/ep/:ep()",
-    component: () => import('./_ep_-CVgAXT3d.mjs')
+    component: () => import('./_ep_-9mpM94ZU.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -1041,7 +1046,7 @@ const plugins = [
   prerender_server_sqIxOBipVr4FbVMA9kqWL0wT8FPop6sKAXLVfifsJzk
 ];
 const layouts = {
-  default: defineAsyncComponent(() => import('./default-BKqvg4Zk.mjs').then((m) => m.default || m)),
+  default: defineAsyncComponent(() => import('./default-v07NTEjJ.mjs').then((m) => m.default || m)),
   player: defineAsyncComponent(() => import('./player-B0w2H5cY.mjs').then((m) => m.default || m))
 };
 const routeRulesMatcher = _routeRulesMatcher;

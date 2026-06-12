@@ -1,0 +1,384 @@
+import { ssrRenderComponent, ssrRenderSlot, ssrRenderClass, ssrRenderList, ssrRenderAttr, ssrInterpolate, ssrRenderAttrs } from 'file://C:/salidumay-nuxt/node_modules/vue/server-renderer/index.mjs';
+import { ref, unref, withCtx, createVNode, openBlock, createBlock, toDisplayString, createTextVNode, watch, mergeProps, useSSRContext } from 'file://C:/salidumay-nuxt/node_modules/vue/index.mjs';
+import { useRoute, useRouter, RouterLink } from 'file://C:/salidumay-nuxt/node_modules/vue-router/vue-router.node.mjs';
+import { u as useAuth } from './useAuth-CsDdxmPs.mjs';
+import { _ as _export_sfc } from './server.mjs';
+import { s as searchAnime } from './api-CaxJTo2b.mjs';
+import { s as searchFilms } from './tmdb-D41Aoa6c.mjs';
+import { s as searchSeries } from './tvSeries-7207TLND.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/axios/index.js';
+import 'file://C:/salidumay-nuxt/node_modules/ofetch/dist/node.mjs';
+import '../_/renderer.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/h3/dist/index.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/ufo/dist/index.mjs';
+import '../_/nitro.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/destr/dist/index.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/hookable/dist/index.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/node-mock-http/dist/index.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/unstorage/dist/index.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/unstorage/drivers/fs.mjs';
+import 'file:///C:/salidumay-nuxt/node_modules/@nuxt/nitro-server/dist/runtime/utils/cache-driver.js';
+import 'file://C:/salidumay-nuxt/node_modules/unstorage/drivers/fs-lite.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/ohash/dist/index.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/klona/dist/index.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/defu/dist/defu.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/scule/dist/index.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/radix3/dist/index.mjs';
+import 'node:fs';
+import 'node:url';
+import 'file://C:/salidumay-nuxt/node_modules/pathe/dist/index.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/unhead/dist/server.mjs';
+import 'node:async_hooks';
+import 'file://C:/salidumay-nuxt/node_modules/devalue/index.js';
+import 'file://C:/salidumay-nuxt/node_modules/unhead/dist/plugins.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/unhead/dist/utils.mjs';
+import 'file://C:/salidumay-nuxt/node_modules/unctx/dist/index.mjs';
+
+const _sfc_main$2 = {
+  __name: "AppNavbar",
+  __ssrInlineRender: true,
+  setup(__props) {
+    const route = useRoute();
+    useRouter();
+    const { user, isLoggedIn } = useAuth();
+    const collapsed = ref(false);
+    const mobileOpen = ref(false);
+    const navItems = [
+      { label: "Home", to: "/", icon: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" },
+      { label: "Trending", to: "/trending", icon: "M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" },
+      { label: "Seasonal", to: "/seasonal", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
+      { label: "Rankings", to: "/rankings", icon: "M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" },
+      { label: "Genres", to: "/genre", icon: "M4 6h16M4 10h16M4 14h16M4 18h16" }
+    ];
+    const contentItems = [
+      { label: "Anime Movies", to: "/movies", icon: "M7 4v16M17 4v16M3 8h4m10 0h4M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" },
+      { label: "TV Series", to: "/series", icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
+      { label: "All Films", to: "/films", icon: "M15 10l4.553-2.069A1 1 0 0121 8.868V15.13a1 1 0 01-1.447.899L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" },
+      { label: "Coming Soon", to: "/films/coming-soon", icon: "M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" },
+      { label: "Action", to: "/films/action", icon: "M13 10V3L4 14h7v7l9-11h-7z" },
+      { label: "Watch", to: "/watch", icon: "M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z" }
+    ];
+    const accountItems = [
+      { label: "Library", to: "/library", icon: "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" },
+      { label: "History", to: "/history", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" }
+    ];
+    function isActive(to) {
+      if (to === "/") return route.path === "/";
+      return route.path.startsWith(to);
+    }
+    return (_ctx, _push, _parent, _attrs) => {
+      var _a, _b, _c, _d, _e, _f;
+      _push(`<!--[--><button class="mob-toggle" aria-label="Menu" data-v-bac266f9><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" data-v-bac266f9>`);
+      if (!mobileOpen.value) {
+        _push(`<path d="M4 6h16M4 12h16M4 18h16" data-v-bac266f9></path>`);
+      } else {
+        _push(`<path d="M6 18L18 6M6 6l12 12" data-v-bac266f9></path>`);
+      }
+      _push(`</svg></button>`);
+      if (mobileOpen.value) {
+        _push(`<div class="mob-overlay" data-v-bac266f9></div>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`<aside class="${ssrRenderClass(["sidebar", { collapsed: collapsed.value, "mob-open": mobileOpen.value }])}" data-v-bac266f9>`);
+      _push(ssrRenderComponent(unref(RouterLink), {
+        to: "/",
+        class: "logo",
+        onClick: ($event) => mobileOpen.value = false
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<span class="logo-kanji" data-v-bac266f9${_scopeId}>\u30B5</span><span class="logo-text" data-v-bac266f9${_scopeId}>Salidumay</span>`);
+          } else {
+            return [
+              createVNode("span", { class: "logo-kanji" }, "\u30B5"),
+              createVNode("span", { class: "logo-text" }, "Salidumay")
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`<nav class="nav" data-v-bac266f9><p class="nav-label" data-v-bac266f9>Discover</p><!--[-->`);
+      ssrRenderList(navItems, (item) => {
+        _push(ssrRenderComponent(unref(RouterLink), {
+          key: item.to,
+          to: item.to,
+          class: ["nav-item", { active: isActive(item.to) }],
+          onClick: ($event) => mobileOpen.value = false
+        }, {
+          default: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(`<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" data-v-bac266f9${_scopeId}><path${ssrRenderAttr("d", item.icon)} stroke-linecap="round" stroke-linejoin="round" data-v-bac266f9${_scopeId}></path></svg><span class="nav-label-text" data-v-bac266f9${_scopeId}>${ssrInterpolate(item.label)}</span>`);
+            } else {
+              return [
+                (openBlock(), createBlock("svg", {
+                  class: "nav-icon",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  stroke: "currentColor",
+                  "stroke-width": "1.8"
+                }, [
+                  createVNode("path", {
+                    d: item.icon,
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round"
+                  }, null, 8, ["d"])
+                ])),
+                createVNode("span", { class: "nav-label-text" }, toDisplayString(item.label), 1)
+              ];
+            }
+          }),
+          _: 2
+        }, _parent));
+      });
+      _push(`<!--]--><p class="nav-label" data-v-bac266f9>Content</p><!--[-->`);
+      ssrRenderList(contentItems, (item) => {
+        _push(ssrRenderComponent(unref(RouterLink), {
+          key: item.to,
+          to: item.to,
+          class: ["nav-item", { active: isActive(item.to) }],
+          onClick: ($event) => mobileOpen.value = false
+        }, {
+          default: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(`<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" data-v-bac266f9${_scopeId}><path${ssrRenderAttr("d", item.icon)} stroke-linecap="round" stroke-linejoin="round" data-v-bac266f9${_scopeId}></path></svg><span class="nav-label-text" data-v-bac266f9${_scopeId}>${ssrInterpolate(item.label)}</span>`);
+            } else {
+              return [
+                (openBlock(), createBlock("svg", {
+                  class: "nav-icon",
+                  viewBox: "0 0 24 24",
+                  fill: "none",
+                  stroke: "currentColor",
+                  "stroke-width": "1.8"
+                }, [
+                  createVNode("path", {
+                    d: item.icon,
+                    "stroke-linecap": "round",
+                    "stroke-linejoin": "round"
+                  }, null, 8, ["d"])
+                ])),
+                createVNode("span", { class: "nav-label-text" }, toDisplayString(item.label), 1)
+              ];
+            }
+          }),
+          _: 2
+        }, _parent));
+      });
+      _push(`<!--]-->`);
+      if (unref(isLoggedIn)) {
+        _push(`<!--[--><p class="nav-label" data-v-bac266f9>Account</p><!--[-->`);
+        ssrRenderList(accountItems, (item) => {
+          _push(ssrRenderComponent(unref(RouterLink), {
+            key: item.to,
+            to: item.to,
+            class: ["nav-item", { active: isActive(item.to) }],
+            onClick: ($event) => mobileOpen.value = false
+          }, {
+            default: withCtx((_, _push2, _parent2, _scopeId) => {
+              if (_push2) {
+                _push2(`<svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" data-v-bac266f9${_scopeId}><path${ssrRenderAttr("d", item.icon)} stroke-linecap="round" stroke-linejoin="round" data-v-bac266f9${_scopeId}></path></svg><span class="nav-label-text" data-v-bac266f9${_scopeId}>${ssrInterpolate(item.label)}</span>`);
+              } else {
+                return [
+                  (openBlock(), createBlock("svg", {
+                    class: "nav-icon",
+                    viewBox: "0 0 24 24",
+                    fill: "none",
+                    stroke: "currentColor",
+                    "stroke-width": "1.8"
+                  }, [
+                    createVNode("path", {
+                      d: item.icon,
+                      "stroke-linecap": "round",
+                      "stroke-linejoin": "round"
+                    }, null, 8, ["d"])
+                  ])),
+                  createVNode("span", { class: "nav-label-text" }, toDisplayString(item.label), 1)
+                ];
+              }
+            }),
+            _: 2
+          }, _parent));
+        });
+        _push(`<!--]--><!--]-->`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</nav>`);
+      _push(ssrRenderComponent(unref(RouterLink), {
+        to: "/support",
+        class: "support-btn",
+        onClick: ($event) => mobileOpen.value = false
+      }, {
+        default: withCtx((_, _push2, _parent2, _scopeId) => {
+          if (_push2) {
+            _push2(`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" data-v-bac266f9${_scopeId}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round" data-v-bac266f9${_scopeId}></path></svg> Support Developer `);
+          } else {
+            return [
+              (openBlock(), createBlock("svg", {
+                viewBox: "0 0 24 24",
+                fill: "none",
+                stroke: "currentColor",
+                "stroke-width": "2",
+                width: "14",
+                height: "14"
+              }, [
+                createVNode("path", {
+                  d: "M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z",
+                  "stroke-linecap": "round",
+                  "stroke-linejoin": "round"
+                })
+              ])),
+              createTextVNode(" Support Developer ")
+            ];
+          }
+        }),
+        _: 1
+      }, _parent));
+      _push(`<div class="sidebar-bottom" data-v-bac266f9>`);
+      if (unref(isLoggedIn)) {
+        _push(`<!--[--><div class="user-row" data-v-bac266f9><div class="user-avatar" data-v-bac266f9>`);
+        if ((_a = unref(user)) == null ? void 0 : _a.avatar) {
+          _push(`<img${ssrRenderAttr("src", unref(user).avatar)}${ssrRenderAttr("alt", unref(user).name)} data-v-bac266f9>`);
+        } else {
+          _push(`<span data-v-bac266f9>${ssrInterpolate(((_d = (_c = (_b = unref(user)) == null ? void 0 : _b.name) == null ? void 0 : _c[0]) == null ? void 0 : _d.toUpperCase()) || "U")}</span>`);
+        }
+        _push(`</div><div class="user-info" data-v-bac266f9><span class="user-name" data-v-bac266f9>${ssrInterpolate((_e = unref(user)) == null ? void 0 : _e.name)}</span><span class="user-email" data-v-bac266f9>${ssrInterpolate((_f = unref(user)) == null ? void 0 : _f.email)}</span></div></div><button class="signout-btn" data-v-bac266f9>Sign Out</button><!--]-->`);
+      } else {
+        _push(`<!--[-->`);
+        _push(ssrRenderComponent(unref(RouterLink), {
+          to: "/login",
+          class: "auth-btn primary",
+          onClick: ($event) => mobileOpen.value = false
+        }, {
+          default: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(`Sign In`);
+            } else {
+              return [
+                createTextVNode("Sign In")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent));
+        _push(ssrRenderComponent(unref(RouterLink), {
+          to: "/register",
+          class: "auth-btn",
+          onClick: ($event) => mobileOpen.value = false
+        }, {
+          default: withCtx((_, _push2, _parent2, _scopeId) => {
+            if (_push2) {
+              _push2(`Register`);
+            } else {
+              return [
+                createTextVNode("Register")
+              ];
+            }
+          }),
+          _: 1
+        }, _parent));
+        _push(`<!--]-->`);
+      }
+      _push(`</div></aside><!--]-->`);
+    };
+  }
+};
+const _sfc_setup$2 = _sfc_main$2.setup;
+_sfc_main$2.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppNavbar.vue");
+  return _sfc_setup$2 ? _sfc_setup$2(props, ctx) : void 0;
+};
+const AppNavbar = /* @__PURE__ */ _export_sfc(_sfc_main$2, [["__scopeId", "data-v-bac266f9"]]);
+const _sfc_main$1 = {
+  __name: "AppTopbar",
+  __ssrInlineRender: true,
+  setup(__props) {
+    useRouter();
+    const searchQuery = ref("");
+    const suggestions = ref([]);
+    const showSug = ref(false);
+    const activeSug = ref(-1);
+    let searchTimer = null;
+    function scoreMatch(title, query) {
+      const t = (title || "").toLowerCase().replace(/[^a-z0-9\s]/g, "");
+      const q = query.toLowerCase().replace(/[^a-z0-9\s]/g, "");
+      if (t === q) return 100;
+      if (t.startsWith(q)) return 90;
+      if (t.includes(q)) return 75;
+      const qWords = q.split(/\s+/).filter(Boolean);
+      const tWords = t.split(/\s+/);
+      const fullWordMatches = qWords.filter((w) => tWords.some((tw) => tw === w || tw.startsWith(w))).length;
+      if (fullWordMatches === qWords.length) return 65;
+      const partialMatches = qWords.filter((w) => t.includes(w)).length;
+      return Math.floor(partialMatches / qWords.length * 40);
+    }
+    watch(searchQuery, (q) => {
+      clearTimeout(searchTimer);
+      activeSug.value = -1;
+      const t = q.trim();
+      if (t.length >= 2) {
+        searchTimer = setTimeout(async () => {
+          const [animeRes, filmRes, tvRes] = await Promise.allSettled([
+            searchAnime(t),
+            searchFilms(t, 1),
+            searchSeries(t, 1)
+          ]);
+          const anime = animeRes.status === "fulfilled" ? (animeRes.value.data || []).map((a) => ({ ...a, _type: "anime", _score: scoreMatch(a.title, t) })) : [];
+          const films = filmRes.status === "fulfilled" ? (filmRes.value.data || []).map((f) => ({ ...f, _type: "film", _score: scoreMatch(f.title, t) })) : [];
+          const tv = tvRes.status === "fulfilled" ? (tvRes.value.data || []).map((s) => ({ ...s, _type: "tv", _score: scoreMatch(s.title, t) })) : [];
+          suggestions.value = [...anime, ...films, ...tv].sort((a, b) => b._score - a._score).slice(0, 8);
+          showSug.value = suggestions.value.length > 0;
+        }, 350);
+      } else {
+        suggestions.value = [];
+        showSug.value = false;
+      }
+    });
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<header${ssrRenderAttrs(mergeProps({ class: "topbar" }, _attrs))} data-v-26209acb><div class="topbar-search" data-v-26209acb><svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" data-v-26209acb><circle cx="11" cy="11" r="7" data-v-26209acb></circle><path d="m21 21-4.35-4.35" data-v-26209acb></path></svg><input${ssrRenderAttr("value", searchQuery.value)} class="search-input" placeholder="Search anime &amp; films\u2026" autocomplete="off" data-v-26209acb>`);
+      if (showSug.value && suggestions.value.length) {
+        _push(`<ul class="suggestions" data-v-26209acb><!--[-->`);
+        ssrRenderList(suggestions.value, (item, i) => {
+          var _a;
+          _push(`<li class="${ssrRenderClass(["sug-item", { active: activeSug.value === i }])}" data-v-26209acb><img${ssrRenderAttr("src", item.image)} class="sug-img"${ssrRenderAttr("alt", item.title)} data-v-26209acb><div class="sug-info" data-v-26209acb><span class="sug-title" data-v-26209acb>${ssrInterpolate(item.title)}</span><span class="sug-meta" data-v-26209acb><span class="${ssrRenderClass(["sug-badge", item._type])}" data-v-26209acb>${ssrInterpolate(item._type === "film" ? "FILM" : item._type === "tv" ? "SERIES" : "ANIME")}</span> ${ssrInterpolate(item.genre || ((_a = item.genreNames) == null ? void 0 : _a[0]) || "")} \xB7 \u2605 ${ssrInterpolate(typeof item.rating === "number" ? item.rating.toFixed(1) : item.rating)}</span></div></li>`);
+        });
+        _push(`<!--]--></ul>`);
+      } else {
+        _push(`<!---->`);
+      }
+      _push(`</div></header>`);
+    };
+  }
+};
+const _sfc_setup$1 = _sfc_main$1.setup;
+_sfc_main$1.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("components/AppTopbar.vue");
+  return _sfc_setup$1 ? _sfc_setup$1(props, ctx) : void 0;
+};
+const AppTopbar = /* @__PURE__ */ _export_sfc(_sfc_main$1, [["__scopeId", "data-v-26209acb"]]);
+const _sfc_main = {
+  __name: "default",
+  __ssrInlineRender: true,
+  setup(__props) {
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(`<!--[-->`);
+      _push(ssrRenderComponent(AppNavbar, null, null, _parent));
+      _push(ssrRenderComponent(AppTopbar, null, null, _parent));
+      _push(`<div class="content-shell">`);
+      ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
+      _push(`</div><!--]-->`);
+    };
+  }
+};
+const _sfc_setup = _sfc_main.setup;
+_sfc_main.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("layouts/default.vue");
+  return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
+};
+
+export { _sfc_main as default };
+//# sourceMappingURL=default-v07NTEjJ.mjs.map

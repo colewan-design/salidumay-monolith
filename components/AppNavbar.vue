@@ -110,6 +110,14 @@ function isActive(to) {
       </template>
     </nav>
 
+    <!-- Support developer -->
+    <RouterLink to="/support" class="support-btn" @click="mobileOpen = false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      Support Developer
+    </RouterLink>
+
     <!-- Bottom: user / sign in -->
     <div class="sidebar-bottom">
       <template v-if="isLoggedIn">
@@ -233,6 +241,29 @@ function isActive(to) {
 .nav-icon { width: 1.05rem; height: 1.05rem; flex-shrink: 0; color: rgba(255,255,255,.35); transition: color .18s; }
 .nav-item:hover .nav-icon { color: rgba(255,255,255,.7); }
 .nav-label-text { flex: 1; }
+
+/* ── Support button ── */
+.support-btn {
+  display: flex;
+  align-items: center;
+  gap: .55rem;
+  margin: .5rem .85rem .15rem;
+  padding: .5rem .85rem;
+  border-radius: 8px;
+  background: rgba(255,45,120,.08);
+  border: 1px solid rgba(255,45,120,.25);
+  color: var(--pink);
+  font-size: .78rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .2s;
+  flex-shrink: 0;
+}
+.support-btn:hover {
+  background: rgba(255,45,120,.18);
+  border-color: rgba(255,45,120,.5);
+}
+.support-btn svg { flex-shrink: 0; }
 
 /* ── Bottom ── */
 .sidebar-bottom {

@@ -1,0 +1,9 @@
+{
+  "pid": 14456,
+  "startedAt": 1781228145878,
+  "command": "dev",
+  "cwd": "C:/salidumay-nuxt",
+  "port": 3333,
+  "hostname": "::1",
+  "url": "http://[::1]:3333"
+}

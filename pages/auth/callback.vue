@@ -15,8 +15,15 @@ onMounted(async () => {
     return
   }
 
-  await handleGoogleCallback(token)
-  router.replace('/')
+  try {
+    const success = await Promise.race([
+      handleGoogleCallback(token),
+      new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 12000)),
+    ])
+    router.replace(success ? '/' : '/login?error=1')
+  } catch (_) {
+    router.replace('/login?error=1')
+  }
 })
 </script>
 

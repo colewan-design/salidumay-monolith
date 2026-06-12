@@ -9,7 +9,7 @@ import CommentSection from '~/components/CommentSection.vue'
 import { getAnimeDetail, getEpisodes, getRelated, getStreamingLinks, getAnimeSeasons } from '~/services/api.js'
 import { getAllSources } from '~/services/streamSources.js'
 import { useAuth } from '~/composables/useAuth.js'
-import { isInLibrary, addToLibrary, removeFromLibrary, recordHistory } from '~/services/userdata.js'
+import { isInLibrary, addToLibrary, removeFromLibrary, recordHistory, incrementViewCount } from '~/services/userdata.js'
 
 const route  = useRoute()
 const router = useRouter()
@@ -249,6 +249,8 @@ async function fetchData() {
 
   if (anime.value?.title) {
     inLibrary.value = isInLibrary(anime.value.id)
+    // Record a unique-IP view for this anime (fire-and-forget)
+    incrementViewCount(anime.value.id, 'anime')
     await loadEpisodeStream(currentEp.value)
   }
 }

@@ -22,6 +22,7 @@ export const CommentSection: typeof import("../components/CommentSection.vue")['
 export const CommunitySection: typeof import("../components/CommunitySection.vue")['default']
 export const ContinueWatching: typeof import("../components/ContinueWatching.vue")['default']
 export const FeaturedFilms: typeof import("../components/FeaturedFilms.vue")['default']
+export const FilmCard: typeof import("../components/FilmCard.vue")['default']
 export const GenreExplorer: typeof import("../components/GenreExplorer.vue")['default']
 export const GenresGrid: typeof import("../components/GenresGrid.vue")['default']
 export const HeroSection: typeof import("../components/HeroSection.vue")['default']
@@ -61,6 +62,7 @@ export const LazyCommentSection: LazyComponent<typeof import("../components/Comm
 export const LazyCommunitySection: LazyComponent<typeof import("../components/CommunitySection.vue")['default']>
 export const LazyContinueWatching: LazyComponent<typeof import("../components/ContinueWatching.vue")['default']>
 export const LazyFeaturedFilms: LazyComponent<typeof import("../components/FeaturedFilms.vue")['default']>
+export const LazyFilmCard: LazyComponent<typeof import("../components/FilmCard.vue")['default']>
 export const LazyGenreExplorer: LazyComponent<typeof import("../components/GenreExplorer.vue")['default']>
 export const LazyGenresGrid: LazyComponent<typeof import("../components/GenresGrid.vue")['default']>
 export const LazyHeroSection: LazyComponent<typeof import("../components/HeroSection.vue")['default']>

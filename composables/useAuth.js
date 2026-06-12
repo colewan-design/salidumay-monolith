@@ -91,7 +91,7 @@ export const useAuth = () => {
   async function fetchMe() {
     if (!state.token) return
     try {
-      const { data } = await axios.get(`${BASE}/auth/me`, { headers: authHeaders() })
+      const { data } = await axios.get(`${BASE}/auth/me`, { headers: authHeaders(), timeout: 10000 })
       state.user = data.user
       lsSet('auth_user', JSON.stringify(data.user))
     } catch (_) {
@@ -103,10 +103,11 @@ export const useAuth = () => {
     if (import.meta.client) window.location.href = `${BASE}/auth/google`
   }
 
-  function handleGoogleCallback(token) {
+  async function handleGoogleCallback(token) {
     state.token = token
     lsSet('auth_token', token)
-    return fetchMe()
+    await fetchMe()
+    return !!state.user
   }
 
   return {

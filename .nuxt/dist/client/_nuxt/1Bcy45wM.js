@@ -1,1 +1,0 @@
-import{z as o,B as t,J as n}from"./DKzUQ_fN.js";const a={__name:"player",setup(r){return o(()=>{document.body.style.overflow="hidden"}),t(()=>{document.body.style.overflow=""}),(e,s)=>n(e.$slots,"default")}};export{a as default};

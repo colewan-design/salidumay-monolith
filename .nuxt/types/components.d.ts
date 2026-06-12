@@ -22,6 +22,7 @@ interface _GlobalComponents {
   CommunitySection: typeof import("../../components/CommunitySection.vue")['default']
   ContinueWatching: typeof import("../../components/ContinueWatching.vue")['default']
   FeaturedFilms: typeof import("../../components/FeaturedFilms.vue")['default']
+  FilmCard: typeof import("../../components/FilmCard.vue")['default']
   GenreExplorer: typeof import("../../components/GenreExplorer.vue")['default']
   GenresGrid: typeof import("../../components/GenresGrid.vue")['default']
   HeroSection: typeof import("../../components/HeroSection.vue")['default']
@@ -61,6 +62,7 @@ interface _GlobalComponents {
   LazyCommunitySection: LazyComponent<typeof import("../../components/CommunitySection.vue")['default']>
   LazyContinueWatching: LazyComponent<typeof import("../../components/ContinueWatching.vue")['default']>
   LazyFeaturedFilms: LazyComponent<typeof import("../../components/FeaturedFilms.vue")['default']>
+  LazyFilmCard: LazyComponent<typeof import("../../components/FilmCard.vue")['default']>
   LazyGenreExplorer: LazyComponent<typeof import("../../components/GenreExplorer.vue")['default']>
   LazyGenresGrid: LazyComponent<typeof import("../../components/GenresGrid.vue")['default']>
   LazyHeroSection: LazyComponent<typeof import("../../components/HeroSection.vue")['default']>

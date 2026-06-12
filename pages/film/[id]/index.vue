@@ -1,6 +1,11 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
 import { getFilmDetail, FILM_EMBED_SOURCES } from '~/services/tmdb.js'
+import {
+  addToLibrary, removeFromLibrary, isInLibrary,
+  isLiked, toggleLike,
+  incrementViewCount, getViewCount, formatViews,
+} from '~/services/userdata.js'
 
 const route  = useRoute()
 const router = useRouter()
@@ -14,6 +19,58 @@ const activeSrc    = ref('')
 const activeSrcIdx = ref(0)
 const isPlaying    = ref(false)
 const srcError     = ref(false)
+
+const inLibrary   = ref(false)
+const liked       = ref(false)
+const likesCount  = ref(0)
+const views       = ref(0)
+const saving      = ref(false)
+const likeWorking = ref(false)
+const authToast   = ref(false)
+
+function showAuthToast() {
+  authToast.value = true
+  setTimeout(() => { authToast.value = false }, 2500)
+}
+
+async function toggleLibrary() {
+  if (saving.value || !film.value) return
+  saving.value = true
+  if (inLibrary.value) {
+    await removeFromLibrary(film.value.id)
+    inLibrary.value = false
+  } else {
+    await addToLibrary({
+      id:       film.value.id,
+      title:    film.value.title,
+      image:    film.value.image,
+      genre:    film.value.genreNames?.[0] || '',
+      episodes: null,
+      rating:   film.value.rating,
+      type:     'film',
+    })
+    inLibrary.value = true
+  }
+  saving.value = false
+}
+
+async function handleLike() {
+  if (!film.value || likeWorking.value) return
+  likeWorking.value = true
+  const result = await toggleLike({
+    id:    film.value.id,
+    title: film.value.title,
+    image: film.value.image,
+    type:  'film',
+  })
+  likeWorking.value = false
+  if (result.unauthenticated) {
+    showAuthToast()
+    return
+  }
+  liked.value      = result.liked
+  likesCount.value = result.count
+}
 
 useSeoMeta({
   title: () => film.value ? `${film.value.title} — Salidumay` : 'Film — Salidumay',
@@ -52,8 +109,15 @@ async function fetchFilm(id) {
 
   const data = await getFilmDetail(id).catch(() => null)
   if (data) {
-    film.value    = data
-    sources.value = FILM_EMBED_SOURCES(id)
+    film.value      = data
+    sources.value   = FILM_EMBED_SOURCES(id)
+    inLibrary.value = isInLibrary(id)
+    // Prefer server state; fall back to localStorage if API didn't return it
+    liked.value      = data.user_liked ?? isLiked(id)
+    likesCount.value = data.likes ?? 0
+    views.value      = data.views ?? getViewCount(id)
+    // Record this visit (unique-IP; server ignores duplicates)
+    incrementViewCount(id, 'film').then(n => { views.value = n })
   }
   loading.value = false
 }
@@ -244,7 +308,30 @@ onMounted(() => fetchFilm(route.params.id))
               <span class="stat-icon">⏱</span>
               <div><span class="stat-val">{{ Math.floor(film.runtime/60) }}h {{ film.runtime%60 }}m</span><span class="stat-lbl">Runtime</span></div>
             </div>
+            <div class="stat" v-if="views > 0">
+              <span class="stat-icon">👁</span>
+              <div><span class="stat-val">{{ formatViews(views) }}</span><span class="stat-lbl">Views</span></div>
+            </div>
           </div>
+
+          <!-- Action buttons -->
+          <div class="action-btns">
+            <button :class="['lib-btn', { saved: inLibrary }]" :disabled="saving" @click="toggleLibrary">
+              <svg viewBox="0 0 24 24" :fill="inLibrary ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2" width="16" height="16">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              {{ inLibrary ? 'In Library' : 'Add to Library' }}
+            </button>
+            <button :class="['heart-btn', { liked }]" :disabled="likeWorking" @click="handleLike" :title="liked ? 'Unlike' : 'Like'">
+              <svg viewBox="0 0 24 24" :fill="liked ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2.2" width="16" height="16">
+                <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span v-if="likesCount > 0" class="likes-count">{{ likesCount }}</span>
+            </button>
+          </div>
+          <Teleport to="body">
+            <div v-if="authToast" class="auth-toast-detail">Sign in to like this film</div>
+          </Teleport>
           <div class="detail-table">
             <div v-if="film.status" class="dt-row"><span class="dt-key">Status</span><span class="dt-val">{{ film.status }}</span></div>
             <div v-if="film.director" class="dt-row"><span class="dt-key">Director</span><span class="dt-val">{{ film.director }}</span></div>
@@ -449,6 +536,40 @@ onMounted(() => fetchFilm(route.params.id))
 .dt-val { font-size:.78rem; font-weight:600; color:var(--text); text-align:right; }
 .trailer-btn { display:inline-flex; align-items:center; gap:.4rem; padding:.5rem 1.1rem; background:rgba(255,45,120,.1); border:1px solid rgba(255,45,120,.4); border-radius:6px; color:var(--pink); font-size:.82rem; font-weight:700; text-decoration:none; transition:all .2s; width:100%; justify-content:center; }
 .trailer-btn:hover { background:rgba(255,45,120,.2); }
+
+.action-btns { display:flex; gap:.5rem; margin-bottom:1rem; }
+.lib-btn {
+  flex:1; display:inline-flex; align-items:center; justify-content:center; gap:.4rem;
+  padding:.5rem .8rem; background:rgba(0,240,255,.08); border:1px solid rgba(0,240,255,.3);
+  border-radius:6px; color:var(--cyan); font-size:.78rem; font-weight:700;
+  cursor:pointer; transition:all .2s;
+}
+.lib-btn:hover { background:rgba(0,240,255,.18); }
+.lib-btn.saved { background:rgba(110,255,110,.1); border-color:rgba(110,255,110,.4); color:#6eff6e; }
+.lib-btn.saved:hover { background:rgba(110,255,110,.2); }
+.lib-btn:disabled { opacity:.6; cursor:default; }
+.heart-btn {
+  width:40px; height:40px; border-radius:6px; flex-shrink:0;
+  background:rgba(255,45,120,.08); border:1px solid rgba(255,45,120,.3);
+  color:var(--pink); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:all .2s;
+}
+.heart-btn:hover { background:rgba(255,45,120,.2); }
+.heart-btn.liked { background:rgba(255,45,120,.2); border-color:rgba(255,45,120,.6); }
+.heart-btn.liked:hover { background:rgba(255,45,120,.35); }
+.heart-btn:disabled { opacity:.6; cursor:default; }
+.likes-count { font-size:.72rem; font-weight:700; }
+
+.auth-toast-detail {
+  position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%);
+  background:rgba(20,28,50,.95); border:1px solid rgba(255,45,120,.45);
+  color:var(--pink); font-size:.82rem; font-weight:700;
+  padding:.6rem 1.4rem; border-radius:8px; z-index:9999;
+  pointer-events:none; white-space:nowrap;
+  animation:toast-slide .2s ease;
+}
+@keyframes toast-slide { from{opacity:0;transform:translateX(-50%) translateY(8px)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
 
 /* Skeletons */
 .sk-poster { width:100%; aspect-ratio:2/3; border-radius:10px; }

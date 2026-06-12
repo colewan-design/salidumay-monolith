@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { addToLibrary, removeFromLibrary, isInLibrary } from '~/services/userdata.js'
+import { addToLibrary, removeFromLibrary, isInLibrary, isLiked, toggleLike, getViewCount, formatViews } from '~/services/userdata.js'
 
 const router = useRouter()
 const props = defineProps({
@@ -9,10 +9,23 @@ const props = defineProps({
   variant: { type: String,  default: 'default' },
 })
 
-const inLibrary = ref(false)
-const saving    = ref(false)
+const inLibrary   = ref(false)
+const liked       = ref(false)
+const views       = ref(0)
+const saving      = ref(false)
+const likeWorking = ref(false)
+const authToast   = ref(false)
 
-onMounted(() => { inLibrary.value = isInLibrary(props.anime.id) })
+function showAuthToast() {
+  authToast.value = true
+  setTimeout(() => { authToast.value = false }, 2500)
+}
+
+onMounted(() => {
+  inLibrary.value = isInLibrary(props.anime.id)
+  liked.value     = isLiked(props.anime.id)
+  views.value     = getViewCount(props.anime.id)
+})
 
 function watchAnime() {
   router.push(`/watch/${props.anime.id}/ep/1`)
@@ -31,9 +44,30 @@ async function toggleLibrary(e) {
   }
   saving.value = false
 }
+
+async function handleLike(e) {
+  e.stopPropagation()
+  if (likeWorking.value) return
+  likeWorking.value = true
+  const result = await toggleLike({
+    id:    props.anime.id,
+    title: props.anime.title,
+    image: props.anime.image,
+    type:  'anime',
+  })
+  likeWorking.value = false
+  if (result.unauthenticated) {
+    showAuthToast()
+    return
+  }
+  liked.value = result.liked
+}
 </script>
 
 <template>
+  <Teleport to="body">
+    <div v-if="authToast" class="auth-toast">Sign in to like anime</div>
+  </Teleport>
   <article class="card" :class="variant">
     <div class="card-img-wrap">
       <img :src="anime.image" :alt="anime.title" loading="lazy" />
@@ -60,6 +94,15 @@ async function toggleLibrary(e) {
             <path v-else d="M5 13l4 4L19 7" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
         </button>
+        <button
+          :class="['add-btn', 'heart-btn', { liked }]"
+          title="Like"
+          @click.stop="handleLike"
+        >
+          <svg viewBox="0 0 24 24" :fill="liked ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2.2" width="15" height="15">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
       </div>
     </div>
 
@@ -69,6 +112,13 @@ async function toggleLibrary(e) {
       <div class="card-meta">
         <span class="card-eps">{{ anime.episodes != null ? anime.episodes + ' ep' : (anime.status === 'Airing' ? 'Ongoing' : '? ep') }}</span>
         <span class="card-rating">★ {{ anime.rating }}</span>
+      </div>
+      <div v-if="views > 0" class="card-views">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="11" height="11">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+          <circle cx="12" cy="12" r="3"/>
+        </svg>
+        {{ formatViews(views) }}
       </div>
     </div>
   </article>
@@ -181,6 +231,12 @@ async function toggleLibrary(e) {
   color: #6eff6e;
 }
 .add-btn.saved:hover { background: rgba(110,255,110,0.28); }
+.add-btn.heart-btn.liked {
+  background: rgba(255,45,120,0.2);
+  border-color: rgba(255,45,120,0.5);
+  color: var(--pink);
+}
+.add-btn.heart-btn.liked:hover { background: rgba(255,45,120,0.35); }
 
 .card-body { padding: 0.75rem; }
 .card-genre {
@@ -204,4 +260,16 @@ async function toggleLibrary(e) {
 .card-meta { display: flex; justify-content: space-between; align-items: center; }
 .card-eps   { font-size: 0.75rem; color: var(--text-muted); }
 .card-rating { font-size: 0.78rem; color: #ffd700; font-weight: 700; }
+.card-views { display: flex; align-items: center; gap: .25rem; font-size: .65rem; color: var(--text-muted); margin-top: .25rem; }</style>
+
+<style>
+.auth-toast {
+  position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+  background: rgba(20,28,50,.95); border: 1px solid rgba(255,45,120,.45);
+  color: var(--pink); font-size: .82rem; font-weight: 700;
+  padding: .6rem 1.4rem; border-radius: 8px; z-index: 9999;
+  pointer-events: none; white-space: nowrap;
+  animation: toast-in .2s ease;
+}
+@keyframes toast-in { from { opacity:0; transform: translateX(-50%) translateY(8px); } to { opacity:1; transform: translateX(-50%) translateY(0); } }
 </style>

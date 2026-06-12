@@ -58,8 +58,11 @@ onMounted(load)
 
       <div v-else-if="!library.length" class="empty-state">
         <div class="empty-icon">📭</div>
-        <p>Your library is empty. Start adding anime while watching!</p>
-        <button class="cta-btn" @click="router.push('/watch')">Browse Anime</button>
+        <p>Your library is empty. Start adding films and anime!</p>
+        <div style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;">
+          <button class="cta-btn" @click="router.push('/watch')">Browse Anime</button>
+          <button class="cta-btn" style="background:var(--cyan);color:#060e14" @click="router.push('/films')">Browse Films</button>
+        </div>
       </div>
 
       <div v-else class="anime-grid">
@@ -71,8 +74,10 @@ onMounted(load)
           <div class="card-info">
             <h3 class="card-title" @click="watch(anime)">{{ anime.title }}</h3>
             <div class="card-meta">
-              <span>{{ anime.genre }}</span>
-              <span v-if="anime.episodes">· {{ anime.episodes }} ep</span>
+              <span :class="['type-badge', anime.type === 'film' ? 'type-film' : 'type-anime']">
+                {{ anime.type === 'film' ? 'FILM' : 'ANIME' }}
+              </span>
+              <span v-if="anime.episodes">{{ anime.episodes }} ep</span>
               <span v-if="anime.rating" class="card-rating">★ {{ anime.rating }}</span>
             </div>
           </div>
@@ -115,8 +120,11 @@ onMounted(load)
 .card-info { padding: .6rem .7rem .7rem; }
 .card-title { font-size: .82rem; font-weight: 700; color: var(--text); cursor: pointer; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; margin-bottom: .3rem; }
 .card-title:hover { color: var(--cyan); }
-.card-meta { display: flex; gap: .35rem; flex-wrap: wrap; font-size: .7rem; color: var(--text-muted); }
+.card-meta { display: flex; gap: .35rem; flex-wrap: wrap; font-size: .7rem; color: var(--text-muted); align-items: center; }
 .card-rating { color: #ffd700; }
+.type-badge { font-size: .58rem; font-weight: 800; padding: .12rem .35rem; border-radius: 3px; letter-spacing: .07em; }
+.type-film  { background: rgba(255,45,120,.2); color: var(--pink); border: 1px solid rgba(255,45,120,.35); }
+.type-anime { background: rgba(0,240,255,.12); color: var(--cyan); border: 1px solid rgba(0,240,255,.3); }
 
 .remove-btn { position: absolute; top: .4rem; right: .4rem; width: 22px; height: 22px; border-radius: 50%; background: rgba(0,0,0,.7); border: none; color: rgba(255,255,255,.7); font-size: .65rem; cursor: pointer; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .2s, background .2s; }
 .anime-card:hover .remove-btn { opacity: 1; }

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, watch, onMounted } from 'vue'
 import AppFooter from '~/components/AppFooter.vue'
+import FilmCard from '~/components/FilmCard.vue'
 import {
   getPopularFilms, getTrendingFilms, getTopRatedFilms,
   getNowPlayingFilms, getUpcomingFilms, getFilmsByGenre,
@@ -80,28 +81,7 @@ onMounted(() => load(1))
 
       <!-- Grid -->
       <div v-else-if="items.length" class="grid">
-        <article
-          v-for="film in items" :key="film.id"
-          class="card"
-          @click="navigateTo(`/film/${film.id}`)"
-        >
-          <div class="card-img">
-            <img :src="film.image" :alt="film.title" loading="lazy" />
-            <span class="film-badge">FILM</span>
-            <div class="play-overlay">
-              <div class="play-btn">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              </div>
-            </div>
-          </div>
-          <div class="card-body">
-            <h3 class="card-title">{{ film.title }}</h3>
-            <div class="meta">
-              <span class="year">{{ film.year }}</span>
-              <span class="rating">★ {{ film.rating?.toFixed(1) }}</span>
-            </div>
-          </div>
-        </article>
+        <FilmCard v-for="film in items" :key="film.id" :film="film" />
       </div>
 
       <!-- Empty -->
@@ -178,24 +158,6 @@ onMounted(() => load(1))
 
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1.25rem; }
 
-.card { border-radius: 8px; overflow: hidden; background: var(--surface); border: 1px solid var(--border); cursor: pointer; transition: transform .3s cubic-bezier(.175,.885,.32,1.275), box-shadow .3s; }
-.card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 0 0 1px rgba(255,45,120,.35), 0 8px 40px rgba(255,45,120,.1); }
-.card:hover .play-overlay { opacity: 1; }
-.card:hover .card-img img { transform: scale(1.08); }
-
-.card-img { position: relative; padding-top: 150%; overflow: hidden; background: #0d1527; }
-.card-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
-
-.film-badge { position: absolute; top: 8px; left: 8px; background: rgba(255,45,120,.25); color: var(--pink); border: 1px solid rgba(255,45,120,.45); font-size: .58rem; font-weight: 800; padding: .18rem .4rem; border-radius: 4px; z-index: 2; letter-spacing: .08em; }
-
-.play-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .25s; background: linear-gradient(to top, rgba(10,14,26,.85) 0%, transparent 70%); z-index: 3; }
-.play-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--pink); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 20px rgba(255,45,120,.5); }
-.play-btn svg { width: 18px; height: 18px; color: #fff; }
-
-.card-body { padding: .7rem; }
-.card-title { font-size: .85rem; font-weight: 700; color: var(--text); margin: 0 0 .35rem; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.meta { display: flex; justify-content: space-between; font-size: .72rem; color: var(--text-muted); }
-.rating { color: #ffd700; font-weight: 700; }
 
 .empty { text-align: center; padding: 6rem 2rem; }
 .empty-icon { font-size: 3rem; }
